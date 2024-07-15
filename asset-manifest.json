@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/capture360Admin/static/css/main.8141ecc0.css",
+    "main.js": "/capture360Admin/static/js/main.68146667.js",
+    "static/js/453.2e76bdc8.chunk.js": "/capture360Admin/static/js/453.2e76bdc8.chunk.js",
+    "index.html": "/capture360Admin/index.html",
+    "main.8141ecc0.css.map": "/capture360Admin/static/css/main.8141ecc0.css.map",
+    "main.68146667.js.map": "/capture360Admin/static/js/main.68146667.js.map",
+    "453.2e76bdc8.chunk.js.map": "/capture360Admin/static/js/453.2e76bdc8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.8141ecc0.css",
+    "static/js/main.68146667.js"
+  ]
+}
