@@ -15,9 +15,10 @@ const DataPage = () => {
   const [fetchedData, setFetchedData] = useState(data || null);
 
   useEffect(() => {
-    if (!fetchedData && apiEndpoint) {
+    if (apiEndpoint) {
       const fetchData = async () => {
         try {
+          console.log("Fetching data from:", apiEndpoint);
           const response = await fetch(apiEndpoint, {
             headers: {
               Accept: "application/json",
@@ -25,6 +26,7 @@ const DataPage = () => {
             },
           });
           const jsonData = await response.json();
+          console.log("Fetched data:", jsonData);
           setFetchedData(jsonData);
         } catch (error) {
           console.error("Failed to fetch data:", error);
@@ -32,21 +34,45 @@ const DataPage = () => {
       };
       fetchData();
     }
-  }, [apiEndpoint, fetchedData]);
+  }, [apiEndpoint]);
 
   const renderImage = (imageUrl, name) => {
-    const url = `https://6ca3-171-79-56-179.ngrok-free.app${imageUrl}`;
-    return <img src={url} alt={name} style={{ width: "100px", height: "auto" }} />;
+    const url = `https://e7ff-157-46-95-165.ngrok-free.app${imageUrl}`;
+    console.log("URL",url);
+    return (
+      <img
+        src={url}
+        alt={name}
+        style={{ width: "100px", height: "auto", cursor: "pointer" }}
+        onClick={() => navigate("/view", { state: { imageUrl, name } })}
+      />
+    );
   };
 
-  const handleViewClick = (plan_id) => {
-    let planEndpoint = "";
-    if (plan_id === 1) {
-      planEndpoint = "https://9677-2401-4900-67a5-542e-617b-b73b-dcf1-e3ab.ngrok-free.app/building/plans/project/1/";
-    } else if (plan_id === 2) {
-      planEndpoint = "https://9677-2401-4900-67a5-542e-617b-b73b-dcf1-e3ab.ngrok-free.app/building/plans/project/2/";
+  const handleView = async (row) => {
+    if (!row.project) {
+      console.error("Project ID is missing:", row);
+      return;
     }
-    navigate('/project-details', { state: { plan_id, planEndpoint } });
+
+    try {
+      const viewUrl = `https://e7ff-157-46-95-165.ngrok-free.app/building/plans/project/${row.project}/`;
+      console.log("Fetching view data from:", viewUrl);
+      const response = await fetch(viewUrl, {
+        headers: {
+          Accept: "application/json",
+          "ngrok-skip-browser-warning": "98547",
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log("Fetched view data:", data);
+      navigate("/data", { state: { title: `Project ${row.project}`, data, apiEndpoint: viewUrl } });
+    } catch (error) {
+      console.error("Failed to fetch view data:", error);
+    }
   };
 
   return (
@@ -61,7 +87,7 @@ const DataPage = () => {
               {Object.keys(fetchedData[0]).map((key, index) => (
                 <TableCell key={index}>{key}</TableCell>
               ))}
-              <TableCell>Actions</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -75,8 +101,8 @@ const DataPage = () => {
                 <TableCell>
                   <Button
                     variant="contained"
-                    color="primary"
-                    onClick={() => handleViewClick(row.plan_id)}
+                    color="secondary"
+                    onClick={() => handleView(row)}
                   >
                     View
                   </Button>
