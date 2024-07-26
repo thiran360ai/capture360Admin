@@ -1,0 +1,31 @@
+/* src/App.css */
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+ }
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  margin-left: 240px; /* Adjust according to Sidebar width */
+}
+
+.card-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+body{
+  
+  background-image: url('b6.jpeg'); /* Adjust path as per your file structure */
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+
+     display: flex;
+     justify-content: center; 
+     align-items: center;
+}

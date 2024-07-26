@@ -1,0 +1,29 @@
+.sidebar-drawer {
+    background-color: grey; /* Grey background */
+    color: white; /* White text */
+    width: 250px; /* Width of the sidebar */
+    position: fixed; /* Make sidebar sticky */
+    height: 100%; /* Full height */
+  }
+  
+  .sidebar-list {
+    padding: 0;
+  }
+  
+  .sidebar-list-item {
+    padding: 15px 20px;
+  }
+  
+  .sidebar-list-item:hover {
+    background-color: #555; /* Slightly lighter grey for hover effect */
+  }
+  
+  .sidebar-list-item a {
+    text-decoration: none; /* Remove underline from links */
+    color: white; /* White text for links */
+  }
+  
+  .sidebar-list-item a:hover {
+    color: #ddd; /* Light grey text on hover */
+  }
+  
