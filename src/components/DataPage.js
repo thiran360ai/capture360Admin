@@ -37,13 +37,18 @@ const DataPage = () => {
   }, [apiEndpoint]);
 
   const renderImage = (imageUrl, name) => {
-    const url = `https://e7ff-157-46-95-165.ngrok-free.app${imageUrl}`;
-    console.log("URL",url);
+    const url = `https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/${imageUrl}`;
+    console.log("URL", url);
     return (
       <img
         src={url}
         alt={name}
-        style={{ width: "100px", height: "auto", cursor: "pointer" }}
+        style={{
+          width: "100px",
+          height: "auto",
+          cursor: "pointer",
+          transition: "transform 0.3s",
+        }}
         onClick={() => navigate("/view", { state: { imageUrl, name } })}
       />
     );
@@ -56,7 +61,7 @@ const DataPage = () => {
     }
 
     try {
-      const viewUrl = `https://e7ff-157-46-95-165.ngrok-free.app/building/plans/project/${row.project}/`;
+      const viewUrl = `https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/building/plans/project/${row.project}/`;
       console.log("Fetching view data from:", viewUrl);
       const response = await fetch(viewUrl, {
         headers: {
@@ -69,39 +74,59 @@ const DataPage = () => {
       }
       const data = await response.json();
       console.log("Fetched view data:", data);
-      navigate("/data", { state: { title: `Project ${row.project}`, data, apiEndpoint: viewUrl } });
+      navigate("/data", `{ state: { title: Project ${row.project}, data, apiEndpoint: viewUrl } }`);
     } catch (error) {
       console.error("Failed to fetch view data:", error);
     }
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#f5f5f5",
+        padding: "20px",
+        borderRadius: "10px",
+        boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+        maxWidth: "1500px",
+        margin: "20px auto",
+      }}
+    >
       <Typography variant="h4" gutterBottom>
         {title}
       </Typography>
       {fetchedData ? (
-        <Table>
-          <TableHead>
+        <Table style={{ width: "100%", marginTop: "20px", borderCollapse: "collapse" }}>
+          <TableHead style={{ backgroundColor: "#007bff", color: "white" }}>
             <TableRow>
               {Object.keys(fetchedData[0]).map((key, index) => (
-                <TableCell key={index}>{key}</TableCell>
+                <TableCell key={index} style={{ padding: "20px", textAlign: "left", fontWeight: "bold", color: "white" }}>
+                  {key}
+                </TableCell>
               ))}
-              <TableCell>Action</TableCell>
+              <TableCell style={{ padding: "20px", textAlign: "left", fontWeight: "bold", color: "white" }}>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {fetchedData.map((row, index) => (
-              <TableRow key={index}>
+              <TableRow key={index} style={{ transition: "background-color 0.3s" }}>
                 {Object.entries(row).map(([key, value], idx) => (
-                  <TableCell key={idx}>
+                  <TableCell key={idx} style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
                     {key === "image" ? renderImage(value, row.name) : value}
                   </TableCell>
                 ))}
-                <TableCell>
+                <TableCell style={{ padding: "10px", borderBottom: "1px solid #ddd" }}>
                   <Button
                     variant="contained"
                     color="secondary"
+                    style={{
+                      backgroundColor: "#6c757d",
+                      color: "white",
+                      padding: "10px 20px",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      transition: "background-color 0.3s",
+                    }}
                     onClick={() => handleView(row)}
                   >
                     View
@@ -114,13 +139,24 @@ const DataPage = () => {
       ) : (
         <Typography>Loading data...</Typography>
       )}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => window.history.back()}
-      >
-        Back
-      </Button>
+      <div style={{ marginTop: "20px", display: "flex", justifyContent: "space-between" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          style={{
+            backgroundColor: "#007bff",
+            color: "white",
+            padding: "10px 20px",
+            border: "none",
+            borderRadius: "5px",
+            cursor: "pointer",
+            transition: "background-color 0.3s",
+          }}
+          onClick={() => window.history.back()}
+        >
+          Back
+        </Button>
+      </div>
     </div>
   );
 };

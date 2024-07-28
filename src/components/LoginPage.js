@@ -64,7 +64,7 @@ const LoginPage = ({ onLoginSuccess }) => {
               required
             />
           </label>
-          <button type="submit">Login</button>
+          <button className='btn'  type="submit">Login</button>
         </form>
       </div>
     </div>

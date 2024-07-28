@@ -9,7 +9,7 @@ const ImageViewPage = () => {
   const { imageUrl, name } = location.state || {};
   const [clickPositions, setClickPositions] = useState([]);
 
-  const fullImageUrl = `https://e7ff-157-46-95-165.ngrok-free.app/${imageUrl}`;
+  const fullImageUrl = `https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/${imageUrl}`;
 
   const handleImageClick = (event) => {
     const { offsetX, offsetY } = event.nativeEvent;
@@ -17,7 +17,7 @@ const ImageViewPage = () => {
   };
 
   return (
-    <div>
+    <div style={{background: 'linear-gradient(135deg, #71b7e6, #9b59b6)'}}>
       <Typography variant="h4" gutterBottom>
         {name}
       </Typography>
