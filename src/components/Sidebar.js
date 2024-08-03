@@ -1,38 +1,45 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import ProjectIcon from '@mui/icons-material/Assignment';
+import CreateIcon from '@mui/icons-material/AddCircle';
+import './sidebar.css';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
-  const navbarHeight = 64; // Adjust this value to match the height of your navbar
-
   const styles = {
     drawer: {
-      backgroundColor: 'grey',
-      color: 'white',
-      width: '250px',
-      height: `calc(100% - ${navbarHeight}px)`, // Adjust height to fill the remaining space below the navbar
-      top: `${navbarHeight}px`, // Position below the navbar
+      height: '100%',
+      top: 0,
       position: 'fixed',
+      backgroundColor: '#f8f9fa',
     },
-    list: {
-      padding: 0,
+  };
+
+  const menuItems = [
+    { text: 'Dashboard', icon: <DashboardIcon />, link: '/' },
+    {
+      text: 'Project Manager',
+      icon: <ProjectIcon />,
+      link: '/project-manager',
+      apiEndpoint: 'https://4aae-157-49-242-245.ngrok-free.app/building/projectlist/',
     },
-    listItem: {
-      padding: '15px 20px',
+    {
+      text: 'Create Manager',
+      icon: <CreateIcon />,
+      link: '/create-manager',
+      apiEndpoint: 'https://4aae-157-49-242-245.ngrok-free.app/building/create_user/',
     },
-    listItemHover: {
-      backgroundColor: '#12cad7',
-    },
-    link: {
-      textDecoration: 'none',
-      color: 'white',
-    },
-    linkHover: {
-      color: '#ddd',
-    },
+  ];
+
+  const navigate = useNavigate();
+
+  const handleNavigation = (link, apiEndpoint) => {
+    navigate(link, { state: { apiEndpoint, title: link === '/create-manager' ? 'Create Manager' : 'Project Manager' } });
   };
 
   return (
@@ -41,26 +48,18 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       anchor="left"
       open={isOpen}
       onClose={toggleSidebar}
-      PaperProps={{ style: styles.drawer }}
+      PaperProps={{ style: styles.drawer, className: 'sidebar-paper' }}
     >
-      <List style={styles.list}>
-        {['Dashboard', 'Users', 'Settings', 'Image View', 'Image Size Display'].map((text) => (
+      <List className="sidebar-list">
+        {menuItems.map((item) => (
           <ListItem
             button
-            key={text}
-            component={Link}
-            to={`/${text.toLowerCase().replace(/\s+/g, '-')}`}
-            onClick={toggleSidebar}
-            style={styles.listItem}
-            onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = styles.listItemHover.backgroundColor)}
-            onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '')}
+            key={item.text}
+            onClick={() => handleNavigation(item.link, item.apiEndpoint)}
+            className="sidebar-list-item"
           >
-            <ListItemText
-              primary={text}
-              primaryTypographyProps={{ style: styles.link }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = styles.linkHover.color)}
-              onMouseLeave={(e) => (e.currentTarget.style.color = styles.link.color)}
-            />
+            <ListItemIcon className="sidebar-list-item-icon">{item.icon}</ListItemIcon>
+            <ListItemText primary={item.text} className="sidebar-list-text" />
           </ListItem>
         ))}
       </List>

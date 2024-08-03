@@ -1,4 +1,4 @@
-/* CreatePlanDataPage.css */
+CreatePlanDataPage.css
 
 .create-plan-page-container {
     padding: 30px;
@@ -30,28 +30,28 @@
   }
   
   .create-plan-page-text-field .MuiInputBase-root.Mui-focused {
-    border-color: #007bff;
+    border-color: #00509e;
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
   }
   
   .create-plan-page-upload-button {
     margin-top: 10px;
-    background-color: #007bff;
+    background-color: #00509e;
     color: #fff;
   }
   
   .create-plan-page-upload-button:hover {
-    background-color: #0056b3;
+    background-color:#00509e;
   }
   
   .create-plan-page-submit-button {
     margin-top: 20px;
-    background-color: #28a745;
+    background-color:#00509e;
     color: #fff;
   }
   
   .create-plan-page-submit-button:hover {
-    background-color: #218838;
+    background-color: #00509e;
   }
   
   .create-plan-page-snackbar {

@@ -1,21 +1,88 @@
-/* src/App.css */
 .App {
+  font-family: 'Roboto', sans-serif;
+  background-color: white;
+  color: #333;
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  height: 100vh;
- }
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+}
 
 .content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
+  flex-grow: 1;
   padding: 20px;
-  margin-left: 240px; /* Adjust according to Sidebar width */
+  max-width: 2600px; /* Limit the maximum width */
+  margin-left: 245px; /* Reduce width from the left side */
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.right-side {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 16px;
+  margin-right: 20px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 .card-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 20px;
 }
 
+.card-container > div {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px; /* Limit the maximum width */
+}
+
+@media (max-width: 600px) {
+  .content {
+    padding: 10px;
+    margin-left: 5px; /* Adjust for smaller screens */
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-bar {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .card-container {
+    flex-direction: column;
+  }
+
+  .card-container > div {
+    max-width: 100%;
+  }
+}

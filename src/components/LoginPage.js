@@ -14,7 +14,7 @@ const LoginPage = ({ onLoginSuccess }) => {
     setSuccess('');
     try {
       const response = await axios.post(
-        'https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/building/login/',
+        'https://4aae-157-49-242-245.ngrok-free.app/building/login/',
         {
           username,
           password,
@@ -26,7 +26,7 @@ const LoginPage = ({ onLoginSuccess }) => {
           },
         }
       );
-      console.log('API Response:', response.data); // Log the entire response data for debugging
+      console.log('API Response:', response.data);
       if (response.data && response.data.Success === 'login successfully') {
         setSuccess('Login successful!');
         onLoginSuccess();
@@ -34,38 +34,69 @@ const LoginPage = ({ onLoginSuccess }) => {
         setError('Invalid username or password. Please try again.');
       }
     } catch (error) {
-      setError('Failed to connect to the server. Please try again later.'); // Generic error message for network issues
+      setError('Failed to connect to the server. Please try again later.');
       console.error('Login error:', error);
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form">
-        <h2>Login Page</h2>
-        {error && <p className="error-message">{error}</p>}
-        {success && <p className="success-message">{success}</p>}
-        <form onSubmit={handleSubmit}>
-          <label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="User Name"
-              required
-            />
-          </label>
-          <label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-              required
-            />
-          </label>
-          <button className='btn'  type="submit">Login</button>
-        </form>
+    <div className="login-page">
+      <header className="login-header">
+        <div className="login-header-content">
+          <h1>We Build It <img src="Device---Macbook-Air.webp" style={{maxHeight: '35px' ,paddingTop: '10px'}} /></h1>
+          <nav className="login-nav"  style={{paddingRight: '22%'}}>
+            <a href="/">Resources</a>
+            <a href="/">About Us</a>
+            <a href="/">Sign Up</a>
+            <a href="/">Sign In</a>
+          </nav>
+        </div>
+      </header>
+      <div className="login-content">
+        <div className="login-container">
+          <div className="login-card">
+            <div className="login-form">
+              <h2>Welcome Back <img src="architect_2942499.png" style={{maxHeight: '40px'}} /></h2>
+              {/* <p>Enter your User name and password to sign in</p> */}
+              {error && <p className="error-message" style={{ color: 'red ', fontSize: '19px'}}>{error}</p>}
+              {success && <p className="success-message">{success}</p>}
+              <form onSubmit={handleSubmit}>
+                <div className="input-group">
+                  <label htmlFor="username" style={{paddingBottom: '10px'}}>User Name</label>
+                  <input
+                    type="text"
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="User Name"
+                    required
+                  />
+                </div>
+                <div className="input-group">
+                  <label htmlFor="password" style={{paddingBottom: '10px'}}>Password</label>
+                  <input
+                    type="password"
+                    id="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+                <div className="remember-me" style={{color: 'white'}}>
+                  <label>
+                    <input type="checkbox" />
+                    Remember me
+                  </label>
+                </div>
+                <button type="submit">Sign In</button>
+              </form>
+              <p className="signup-link">
+                Don't have an account? <a href="/signup">Sign up</a>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
