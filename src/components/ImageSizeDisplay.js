@@ -8,14 +8,15 @@ const ImageGalleryComponent = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [circles, setCircles] = useState({});
-  const canvasRef = useRef(null);
-  const imageRef = useRef(null);
+  const [isSplit, setIsSplit] = useState(false);
+  const canvasRefs = [useRef(null), useRef(null)];
+  const imageRefs = [useRef(null), useRef(null)];
 
   useEffect(() => {
     const fetchImages = async () => {
       try {
         const response = await fetch(
-          "https://e7ff-157-46-95-165.ngrok-free.app/building/video/2/frames/",
+          "https://3973-2409-4072-6e8f-befe-7c12-7ad2-88f1-629a.ngrok-free.app/building/video/2/frames/",
           {
             headers: {
               Accept: "application/json",
@@ -86,9 +87,9 @@ const ImageGalleryComponent = () => {
     ctx.stroke();
   };
 
-  const handleCanvasClick = (e) => {
+  const handleCanvasClick = (e, index) => {
     if (isEditing) {
-      const canvas = canvasRef.current;
+      const canvas = canvasRefs[index].current;
       const ctx = canvas.getContext("2d");
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -96,43 +97,50 @@ const ImageGalleryComponent = () => {
       drawCircle(ctx, x, y);
       setCircles((prevCircles) => {
         const newCircles = { ...prevCircles };
-        if (!newCircles[currentIndex]) {
-          newCircles[currentIndex] = [];
+        if (!newCircles[currentIndex + index]) {
+          newCircles[currentIndex + index] = [];
         }
-        newCircles[currentIndex].push({ x, y });
+        newCircles[currentIndex + index].push({ x, y });
         return newCircles;
       });
     }
   };
 
-  const renderImage = (imageObj, name) => {
-    const url = `https://e7ff-157-46-95-165.ngrok-free.app${imageObj.url}`;
+  const renderImage = (imageObj, name, index) => {
+    const url = `https://3973-2409-4072-6e8f-befe-7c12-7ad2-88f1-629a.ngrok-free.app/${imageObj.url}`;
     console.log("Constructed Image URL:", url);
     return (
       <div style={{ position: "relative" }}>
         <img
-          ref={imageRef}
+          ref={imageRefs[index]}
           key={imageObj.url}
           src={url}
           alt={name}
-          style={{ width: "100%", height: "auto", margin: "5px", cursor: isEditing ? "pointer" : "default" }}
+          style={{
+            width: "100%",
+            height: "auto",
+            margin: "5px",
+            cursor: isEditing ? "pointer" : "default",
+          }}
           onClick={handleImageClick}
           onError={(e) => (e.target.style.display = "none")}
           onLoad={() => {
-            const canvas = canvasRef.current;
-            if (canvas && imageRef.current) {
-              canvas.width = imageRef.current.offsetWidth;
-              canvas.height = imageRef.current.offsetHeight;
+            const canvas = canvasRefs[index].current;
+            if (canvas && imageRefs[index].current) {
+              canvas.width = imageRefs[index].current.offsetWidth;
+              canvas.height = imageRefs[index].current.offsetHeight;
               const ctx = canvas.getContext("2d");
-              if (circles[currentIndex]) {
-                circles[currentIndex].forEach((circle) => drawCircle(ctx, circle.x, circle.y));
+              if (circles[currentIndex + index]) {
+                circles[currentIndex + index].forEach((circle) =>
+                  drawCircle(ctx, circle.x, circle.y)
+                );
               }
             }
           }}
         />
         <canvas
-          ref={canvasRef}
-          onClick={handleCanvasClick}
+          ref={canvasRefs[index]}
+          onClick={(e) => handleCanvasClick(e, index)}
           style={{
             position: "absolute",
             top: 0,
@@ -146,6 +154,10 @@ const ImageGalleryComponent = () => {
     );
   };
 
+  const handleSplit = () => {
+    setIsSplit(!isSplit);
+  };
+
   return (
     <div style={{ textAlign: "center" }}>
       <Typography variant="h4" gutterBottom>
@@ -154,68 +166,95 @@ const ImageGalleryComponent = () => {
       {images.length > 0 ? (
         <div
           style={{
-            position: "relative",
-            width: "100%",
-            maxWidth: "600px",
-            margin: "auto",
+            display: "flex",
+            flexDirection: isSplit ? "row" : "column",
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: isSplit ? "wrap" : "nowrap",
           }}
         >
-          {renderImage(
-            images[currentIndex],
-            `360 Degree Image ${currentIndex}`
+          <div
+            style={{
+              position: "relative",
+              width: isSplit ? "45%" : "100%",
+              maxWidth: "600px",
+              margin: isSplit ? "10px" : "auto",
+            }}
+          >
+            {renderImage(
+              images[currentIndex],
+              `360 Degree Image ${currentIndex}`,
+              0
+            )}
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handlePrev}
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: "0",
+                transform: "translateY(-50%)",
+              }}
+            >
+              Previous
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleNext}
+              style={{
+                position: "absolute",
+                top: "50%",
+                right: "0",
+                transform: "translateY(-50%)",
+              }}
+            >
+              Next
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setIsPaused(!isPaused)}
+              style={{
+                position: "absolute",
+                top: "90%",
+                left: "50%",
+                transform: "translateX(-50%)",
+              }}
+            >
+              {isPaused ? "Resume" : "Pause"}
+            </Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={handleEdit}
+              style={{
+                position: "absolute",
+                top: "90%",
+                right: "0",
+                transform: "translateY(-50%)",
+              }}
+            >
+              {isEditing ? "Stop Editing" : "Edit"}
+            </Button>
+          </div>
+          {isSplit && (
+            <div
+              style={{
+                position: "relative",
+                width: "45%",
+                maxWidth: "600px",
+                margin: "10px",
+              }}
+            >
+              {renderImage(
+                images[(currentIndex + 1) % images.length],
+                `360 Degree Image ${(currentIndex + 1) % images.length}`,
+                1
+              )}
+            </div>
           )}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handlePrev}
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "0",
-              transform: "translateY(-50%)",
-            }}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleNext}
-            style={{
-              position: "absolute",
-              top: "50%",
-              right: "0",
-              transform: "translateY(-50%)",
-            }}
-          >
-            Next
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setIsPaused(!isPaused)}
-            style={{
-              position: "absolute",
-              top: "90%",
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          >
-            {isPaused ? "Resume" : "Pause"}
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleEdit}
-            style={{
-              position: "absolute",
-              top: "90%",
-              right: "0",
-              transform: "translateY(-50%)",
-            }}
-          >
-            {isEditing ? "Stop Editing" : "Edit"}
-          </Button>
         </div>
       ) : (
         <Typography>Loading images...</Typography>
@@ -227,6 +266,14 @@ const ImageGalleryComponent = () => {
         style={{ marginTop: "20px" }}
       >
         Back
+      </Button>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={handleSplit}
+        style={{ marginTop: "20px", marginLeft: "10px" }}
+      >
+        {isSplit ? "Unsplit" : "Split"}
       </Button>
     </div>
   );

@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,12 +7,12 @@ import Typography from '@mui/material/Typography';
 
 const Navbar = ({ toggleSidebar }) => {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleSidebar}>
+    <AppBar position="fixed" className="navbar">
+      <Toolbar className="navbar-toolbar">
+        <IconButton edge="start" aria-label="menu" onClick={toggleSidebar} className="navbar-icon">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6">
+        <Typography variant="h6" className="navbar-title">
           Admin Panel
         </Typography>
       </Toolbar>

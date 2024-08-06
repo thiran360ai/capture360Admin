@@ -7,18 +7,22 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Drawer from "@mui/material/Drawer";
+import CreateDataPage from "./CreateDataPage";
+import { Box, Card, CardContent } from "@mui/material";
+import "./DataPage.css";
 
 const DataPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { title, data, apiEndpoint } = location.state || {};
-  const [fetchedData, setFetchedData] = useState(data || null);
+  const { title, apiEndpoint } = location.state || {};
+  const [fetchedData, setFetchedData] = useState(null);
+  const [isCreateDrawerOpen, setIsCreateDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (apiEndpoint) {
       const fetchData = async () => {
         try {
-          console.log("Fetching data from:", apiEndpoint);
           const response = await fetch(apiEndpoint, {
             headers: {
               Accept: "application/json",
@@ -26,7 +30,6 @@ const DataPage = () => {
             },
           });
           const jsonData = await response.json();
-          console.log("Fetched data:", jsonData);
           setFetchedData(jsonData);
         } catch (error) {
           console.error("Failed to fetch data:", error);
@@ -36,19 +39,6 @@ const DataPage = () => {
     }
   }, [apiEndpoint]);
 
-  const renderImage = (imageUrl, name) => {
-    const url = `https://e7ff-157-46-95-165.ngrok-free.app${imageUrl}`;
-    console.log("URL",url);
-    return (
-      <img
-        src={url}
-        alt={name}
-        style={{ width: "100px", height: "auto", cursor: "pointer" }}
-        onClick={() => navigate("/view", { state: { imageUrl, name } })}
-      />
-    );
-  };
-
   const handleView = async (row) => {
     if (!row.project) {
       console.error("Project ID is missing:", row);
@@ -56,8 +46,7 @@ const DataPage = () => {
     }
 
     try {
-      const viewUrl = `https://e7ff-157-46-95-165.ngrok-free.app/building/plans/project/${row.project}/`;
-      console.log("Fetching view data from:", viewUrl);
+      const viewUrl = `https://3973-2409-4072-6e8f-befe-7c12-7ad2-88f1-629a.ngrok-free.app/building/plans/project/${row.project}/`;
       const response = await fetch(viewUrl, {
         headers: {
           Accept: "application/json",
@@ -68,60 +57,96 @@ const DataPage = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log("Fetched view data:", data);
-      navigate("/data", { state: { title: `Project ${row.project}`, data, apiEndpoint: viewUrl } });
+      navigate("/plan-details", {
+        state: { title: `Plan Details for Project ${row.project}`, data },
+      });
     } catch (error) {
       console.error("Failed to fetch view data:", error);
     }
   };
 
+  const renderImage = (imageUrl, name) => {
+    const url = `https://3973-2409-4072-6e8f-befe-7c12-7ad2-88f1-629a.ngrok-free.app${imageUrl}`;
+    return (
+      <img
+        src={url}
+        alt={name}
+        style={{ width: "100px", height: "auto", cursor: "pointer" }}
+        onClick={() =>
+          navigate("/image-view", { state: { imageUrl: url, name } })
+        }
+      />
+    );
+  };
+
+  const openCreateDrawer = () => {
+    setIsCreateDrawerOpen(true);
+  };
+
+  const closeCreateDrawer = () => {
+    setIsCreateDrawerOpen(false);
+  };
+
   return (
-    <div>
-      <Typography variant="h4" gutterBottom>
-        {title}
-      </Typography>
-      {fetchedData ? (
-        <Table>
-          <TableHead>
-            <TableRow>
-              {Object.keys(fetchedData[0]).map((key, index) => (
-                <TableCell key={index}>{key}</TableCell>
-              ))}
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {fetchedData.map((row, index) => (
-              <TableRow key={index}>
-                {Object.entries(row).map(([key, value], idx) => (
-                  <TableCell key={idx}>
-                    {key === "image" ? renderImage(value, row.name) : value}
-                  </TableCell>
+    <Card style={{width: '1100px',height:'650px' ,boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.3)', paddingTop: '20px', overflow: 'auto',
+      // backgroundColor: '#eceff1'
+    }}>
+      <CardContent style={{}}>
+        <Typography variant="h4" gutterBottom style={{ color: "#00509e",fontWeight:'bold',paddingLeft: '20px' }}>
+          {title}
+        </Typography>
+        <Box
+          className="button-container"
+          style={{ marginLeft: "80%", justifyContent: "flex-end" }}
+        >
+          <Button variant="contained" color="primary" onClick={openCreateDrawer}  
+          style={{color: "#ffffff", margin: "10px 0", borderRadius: 4 }}>
+            Create Project
+          </Button>
+        </Box>
+
+        {fetchedData ? (
+          <Table>
+            <TableHead>
+              <TableRow>
+                {Object.keys(fetchedData[0]).map((key, index) => (
+                  <TableCell key={index} style={{ fontSize: '20px', fontWeight: 'bold' }}>{key}</TableCell>
                 ))}
-                <TableCell>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleView(row)}
-                  >
-                    View
-                  </Button>
-                </TableCell>
+                <TableCell style={{ fontSize: '20px', fontWeight: 'bold' }}>Action</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      ) : (
-        <Typography>Loading data...</Typography>
-      )}
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => window.history.back()}
-      >
-        Back
-      </Button>
-    </div>
+            </TableHead>
+            <TableBody>
+              {fetchedData.map((row, index) => (
+                <TableRow key={index}>
+                  {Object.entries(row).map(([key, value], idx) => (
+                    <TableCell key={idx} style={{ fontSize: '18px', }}>
+                      {key === "image"
+                        ? renderImage(value, row.name)
+                        : value}
+                    </TableCell>
+                  ))}
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleView(row)}
+                      style={{ width: "180px", color: "#ffffff", margin: "10px 0", borderRadius: 9 }}
+                    >
+                      View Floor_Data
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <Typography variant="body1">Loading...</Typography>
+        )}
+        <Drawer anchor="right" open={isCreateDrawerOpen} onClose={closeCreateDrawer}>
+          <CreateDataPage onClose={closeCreateDrawer} />
+        </Drawer>
+      </CardContent>
+    </Card>
   );
 };
 
