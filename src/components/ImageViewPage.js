@@ -8,7 +8,13 @@ const ImageViewPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { imageUrl, name } = location.state || {};
+<<<<<<< HEAD
   const [dots, setDots] = useState([]);
+=======
+  const [clickPositions, setClickPositions] = useState([]);
+
+  const fullImageUrl = `https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/${imageUrl}`;
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
 
   const handleImageClick = (event) => {
     const rect = event.target.getBoundingClientRect();
@@ -23,6 +29,7 @@ const ImageViewPage = () => {
   };
 
   return (
+<<<<<<< HEAD
     <div style={{
       display: 'flex',
       flexDirection: 'column',
@@ -33,6 +40,9 @@ const ImageViewPage = () => {
       padding: '20px',
       backgroundColor: "whitesmoke"
     }}>
+=======
+    <div style={{background: 'linear-gradient(135deg, #71b7e6, #9b59b6)'}}>
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
       <Typography variant="h4" gutterBottom>
         {name}
       </Typography>

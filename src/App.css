@@ -4,12 +4,18 @@
   color: #333;
   min-height: 100vh;
   display: flex;
+<<<<<<< HEAD
 }
 
 .main-container {
   display: flex;
   width: 100%;
 }
+=======
+  flex-direction: column;
+  height: 100vh;
+ }
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
 
 .content {
   flex-grow: 1;
@@ -86,3 +92,4 @@
     max-width: 100%;
   }
 }
+

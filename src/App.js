@@ -82,6 +82,7 @@ const App = () => {
   }, []);
 
   return (
+<<<<<<< HEAD
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
@@ -95,6 +96,37 @@ const App = () => {
                     <div className="right-side">
                       <input type="text" className="search-bar" placeholder="Search..." />
                       <div className="profile">Profile</div>
+=======
+    <Router>
+      <div className="App">
+        {isLoggedIn ? (
+          <>
+            <Navbar toggleSidebar={toggleSidebar} />
+            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+            <div className="content">
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <div className="card-container">
+                      <CustomCard
+                        title="ProjectList"
+                        content="Content for ProjectList"
+                        apiEndpoint="https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/building/projectlist/"
+                        onCreateData={() => {}}
+                      />
+                      <CustomCard
+                        title="Plan_Details"
+                        content="Content for Plan_Details"
+                        apiEndpoint="https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/building/plan_details/"
+                        onCreateData={() => {}}
+                      />
+                      <CustomCard
+                        title="Create_user"
+                        content="Content for Create_user"
+                        apiEndpoint="https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/building/create_user/"
+                      />
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
                     </div>
                   </div>
                   <Routes>

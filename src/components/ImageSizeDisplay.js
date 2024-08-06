@@ -16,7 +16,11 @@ const ImageGalleryComponent = () => {
     const fetchImages = async () => {
       try {
         const response = await fetch(
+<<<<<<< HEAD
           "https://3973-2409-4072-6e8f-befe-7c12-7ad2-88f1-629a.ngrok-free.app/building/video/2/frames/",
+=======
+          "https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/building/video/2/frames/",
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
           {
             headers: {
               Accept: "application/json",
@@ -107,7 +111,11 @@ const ImageGalleryComponent = () => {
   };
 
   const renderImage = (imageObj, name, index) => {
+<<<<<<< HEAD
     const url = `https://3973-2409-4072-6e8f-befe-7c12-7ad2-88f1-629a.ngrok-free.app/${imageObj.url}`;
+=======
+    const url = `https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/${imageObj.url}`;
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
     console.log("Constructed Image URL:", url);
     return (
       <div style={{ position: "relative" }}>

@@ -28,33 +28,54 @@
   }
   
   .create-plan-page-text-field .MuiInputBase-root.Mui-focused {
+<<<<<<< HEAD
     border-color: #00509e;
+=======
+    border-color: #007bff;
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
   }
   
   .create-plan-page-upload-button {
     margin-top: 10px;
+<<<<<<< HEAD
     background-color: #00509e;
+=======
+    background-color: #007bff;
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
     color: #fff;
   }
   
   .create-plan-page-upload-button:hover {
+<<<<<<< HEAD
     background-color: #00509e;
+=======
+    background-color: #0056b3;
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
   }
   
   .create-plan-page-submit-button {
     margin-top: 20px;
+<<<<<<< HEAD
     background-color: #00509e;
+=======
+    background-color: #28a745;
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
     color: #fff;
   }
   
   .create-plan-page-submit-button:hover {
+<<<<<<< HEAD
     background-color: #00509e;
+=======
+    background-color: #218838;
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
   }
   
   .create-plan-page-snackbar {
     display: flex;
     justify-content: center;
+<<<<<<< HEAD
   }
 
   .create-data-page-container {
@@ -89,3 +110,6 @@
     width: 100%;
   }
   
+=======
+  }
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738

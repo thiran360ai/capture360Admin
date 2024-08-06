@@ -14,7 +14,11 @@ const LoginPage = ({ onLoginSuccess }) => {
     setSuccess('');
     try {
       const response = await axios.post(
+<<<<<<< HEAD
         'https://3973-2409-4072-6e8f-befe-7c12-7ad2-88f1-629a.ngrok-free.app/building/login/',
+=======
+        'https://5c55-2409-408d-1e08-1bc8-9c9d-bdc6-29a1-7760.ngrok-free.app/building/login/',
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
         {
           username,
           password,
@@ -26,7 +30,11 @@ const LoginPage = ({ onLoginSuccess }) => {
           },
         }
       );
+<<<<<<< HEAD
       console.log('API Response:', response.data);
+=======
+      console.log('API Response:', response.data); // Log the entire response data for debugging
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
       if (response.data && response.data.Success === 'login successfully') {
         setSuccess('Login successful!');
         onLoginSuccess();
@@ -34,12 +42,17 @@ const LoginPage = ({ onLoginSuccess }) => {
         setError('Invalid username or password. Please try again.');
       }
     } catch (error) {
+<<<<<<< HEAD
       setError('Failed to connect to the server. Please try again later.');
+=======
+      setError('Failed to connect to the server. Please try again later.'); // Generic error message for network issues
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
       console.error('Login error:', error);
     }
   };
 
   return (
+<<<<<<< HEAD
     <div className="login-page">
       <header className="login-header">
         <div className="login-header-content">
@@ -97,9 +110,41 @@ const LoginPage = ({ onLoginSuccess }) => {
             </div>
           </div>
         </div>
+=======
+    <div className="login-container">
+      <div className="login-form">
+        <h2>Login Page</h2>
+        {error && <p className="error-message">{error}</p>}
+        {success && <p className="success-message">{success}</p>}
+        <form onSubmit={handleSubmit}>
+          <label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="User Name"
+              required
+            />
+          </label>
+          <label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+            />
+          </label>
+          <button className='btn'  type="submit">Login</button>
+        </form>
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
       </div>
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default LoginPage;
+=======
+export default LoginPage;
+>>>>>>> fa8b5c009bcd0edbbced772cb7835d5a6dcd7738
